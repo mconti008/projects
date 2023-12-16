@@ -1,0 +1,124 @@
+from random import choice
+from tkinter import *
+from tkinter import messagebox
+
+
+class Tombola:
+    def __init__(self) -> None:
+        
+        self.sacchetto = set()
+        self.n_estratti = []
+        self.n_estratti_ordine =[]
+        self.inizio_sacco()
+        
+        
+
+    
+
+    def colora_tabella(self):
+        for e in self.n_estratti:
+            u= e%10
+            d= e//10
+            if u == 0:
+                d -= 1
+                u = 10
+                Label(board, text='%02d' % (e), fg='black', bg='green', font="Helvetica 40 bold") \
+                    .grid(row=d, column=u, padx=5, pady=5,sticky="nsew")
+            elif u != 0:
+                Label(board, text='%02d' % (e), fg='black', bg='green', font="Helvetica 40 bold") \
+                    .grid(row=d, column=u, padx=5, pady=5,sticky="nsew")
+        
+
+        
+
+
+    
+    def inizio_sacco(self) -> None:
+        self.sacchetto.clear()
+        self.n_estratti.clear()
+        self.n_estratti_ordine.clear()
+        for estratto in range (1,91):
+            self.sacchetto.add(estratto)
+
+    def estrai(self) -> int:
+        e = choice(tuple(self.sacchetto))
+        self.sacchetto.remove(e)
+        self.n_estratti.append(e)
+        self.n_estratti_ordine.append(e)
+        return e
+    
+    def lista_n_estratti(self):
+        return self.n_estratti
+    
+    def ultimo_n_estratti(self)-> int:
+        return self.n_estratti[-1]
+    
+    def cerca_se_estratto(self,n) ->bool:
+        return n in self.n_estratti
+    
+    def estraz_rimanenti(self)-> bool:
+        return  len(self.sacchetto) > 0
+    
+    def lista_n_estratti_ordine(self):
+        return sorted(self.n_estratti_ordine)
+    
+
+
+if __name__ == "__main__":
+
+    tombola = Tombola()
+    board = Tk()
+    board.geometry()
+    board.title('Tabellone')
+    for x in range(1,11):
+        for y in range (0,9):
+            board.grid_rowconfigure(y,weight=1)
+            board.grid_columnconfigure(x,weight=1)
+       
+
+    for i in range(1, 11):
+            for a in range(0, 9):
+                Label(board, text='%02d' % (i + (10 * a)), fg='black', bg='white',
+                    font="Helvetica 10 bold").grid(row=a, column=[i], padx=5, pady=5, sticky="nsew")
+                
+   
+   
+
+   
+   
+   
+   
+   
+    while tombola.estraz_rimanenti():
+        risposta = input("Estraggo il prossimo numero?")
+        if risposta.lower() == "e":
+            print("I numeri estratti sono: ",tombola.lista_n_estratti())
+        elif risposta.lower() == "ec":
+            print("I numeri estratti sono: ",tombola.lista_n_estratti_ordine())
+        elif risposta.lower() == "u":
+            print("L'ultimo numero estratto è: ",tombola.ultimo_n_estratti())
+        elif risposta.isnumeric():
+            a=" estratto" if tombola.cerca_se_estratto(int(risposta)) else " NON estratto"
+            print(f"{risposta} {a}")
+        
+        else:
+            e = tombola.estrai()
+            tombola.colora_tabella()
+            
+            print(f"E' stato estratto il numero {e}")
+    
+    
+        
+             
+       
+
+print("Non ci sono più numeri da estrarre")
+r=input("Vuoi azzerare il tabellone")
+while r.lower == S:
+   tombola = Tombola() 
+else:
+   quit() 
+
+
+
+
